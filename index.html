@@ -855,10 +855,224 @@
     .filter-bar { padding: 0 20px 14px; }
   }
 
+
+  /* MOMENTS GRID */
+  .moments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .moment-card {
+    background: var(--bg); padding: 0;
+    cursor: pointer; transition: background 0.2s;
+    position: relative; overflow: visible;
+    animation: fadeUp 0.4s ease both;
+  }
+  .moment-card:hover { background: var(--surface); }
+  .moment-card::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--accent2);
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.3s ease; z-index: 2;
+  }
+  .moment-card:hover::before { transform: scaleY(1); }
+  .moment-thumb-wrap {
+    width: 100%; height: 200px;
+    overflow: hidden; position: relative;
+  }
+  .moment-thumb {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: saturate(0.85); transition: filter 0.3s, transform 0.4s;
+  }
+  .moment-card:hover .moment-thumb { filter: saturate(1); transform: scale(1.03); }
+  .moment-body { padding: 18px 20px; }
+  .moment-name {
+    font-size: 1.1rem; font-weight: 800;
+    letter-spacing: -0.3px; margin-bottom: 6px;
+  }
+  .moment-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 1.5px;
+    color: var(--text-muted); text-transform: uppercase;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .moment-meta span { display: flex; align-items: center; gap: 4px; }
+  .moment-media-count {
+    position: absolute; bottom: 8px; right: 8px;
+    background: rgba(5,5,10,0.75); padding: 3px 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 1px; color: white;
+  }
+
+  /* MOMENT DETAIL */
+  .moment-detail-name {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800; letter-spacing: -2px; line-height: 1;
+  }
+  .moment-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--accent2);
+    background: rgba(255,107,53,0.1);
+    padding: 4px 12px; margin-bottom: 16px;
+  }
+
+
+  /* AIRPORT AUTOCOMPLETE */
+  .autocomplete-wrap { position: relative; }
+  .autocomplete-list {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--surface); border: 1px solid var(--accent);
+    border-top: none; z-index: 9999; max-height: 220px; overflow-y: auto;
+  }
+  .autocomplete-item {
+    padding: 10px 14px; cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    transition: background 0.15s; border-bottom: 1px solid var(--border);
+  }
+  .autocomplete-item:last-child { border-bottom: none; }
+  .autocomplete-item:hover, .autocomplete-item.highlighted { background: var(--surface2); }
+  .ac-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--accent); min-width: 36px;
+  }
+  .ac-name { font-size: 0.82rem; color: var(--text-muted); }
+  .ac-city { font-size: 0.75rem; color: var(--text-dim); margin-left: auto; font-family: 'IBM Plex Mono', monospace; }
+
+  /* QUICK ADD */
+  .quick-add-bar {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 48px 20px;
+    display: none;
+  }
+  .quick-add-bar.visible { display: flex; gap: 8px; }
+  .quick-add-input {
+    flex: 1; height: 46px; padding: 0 16px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); font-family: 'Syne', sans-serif; font-size: 0.9rem;
+    transition: border-color 0.2s;
+  }
+  .quick-add-input:focus { border-color: var(--accent); outline: none; }
+  .quick-add-input::placeholder { color: var(--text-dim); font-style: italic; }
+  .quick-add-btn {
+    height: 46px; padding: 0 20px;
+    background: var(--accent); border: none;
+    color: var(--bg); font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 0.8rem; cursor: pointer;
+    transition: opacity 0.2s; white-space: nowrap;
+  }
+  .quick-add-btn:hover { opacity: 0.85; }
+  .quick-add-hint {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 1.5px;
+    color: var(--text-dim); padding: 5px 0;
+    text-transform: uppercase;
+  }
+
+  /* DUPLICATE BUTTON */
+  .btn-dup {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    background: none; border: 1px solid var(--border);
+    color: var(--text-muted); cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+  }
+  .btn-dup:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .quick-add-bar { padding: 0 20px 16px; }
+  }
+
+
+  /* STARFIELD */
+  #starfield {
+    position: fixed; inset: 0;
+    z-index: 0; pointer-events: none;
+    opacity: 0.7;
+  }
+  body > *:not(#starfield) { position: relative; z-index: 1; }
+  
+  /* Subtle atmospheric glow at top */
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 40vh;
+    background: radial-gradient(ellipse at 50% -20%, rgba(0,194,255,0.06) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 30vh;
+    background: radial-gradient(ellipse at 50% 120%, rgba(255,107,53,0.04) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+
 </style>
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
+<div id="login-screen" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:99999;align-items:center;justify-content:center;flex-direction:column">
+  <div style="width:100%;max-width:420px;padding:48px 40px;background:var(--surface);border:1px solid var(--border)">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.55rem;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:12px">✦ Editor Access</div>
+    <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-1px;margin-bottom:6px">Mike</div>
+    <div style="font-family:'Lora',serif;font-style:italic;color:var(--text-muted);font-size:0.9rem;margin-bottom:36px">From Skies to Streets.</div>
+    <div id="login-error" style="display:none;font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:1px;color:var(--red);background:rgba(240,82,82,0.08);border:1px solid rgba(240,82,82,0.2);padding:10px 14px;margin-bottom:16px"></div>
+
+    <!-- STEP 1: Email -->
+    <div id="login-step-email">
+      <div style="margin-bottom:24px">
+        <label style="font-family:'IBM Plex Mono',monospace;font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:6px">Your Email</label>
+        <input id="login-email" type="email" placeholder="your@email.com"
+          style="width:100%;height:46px;padding:0 14px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Syne',sans-serif;font-size:0.9rem"
+          onkeydown="if(event.key==='Enter')sendOTP()">
+      </div>
+      <button id="otp-send-btn" onclick="sendOTP()"
+        style="width:100%;height:46px;background:var(--accent);border:none;color:var(--bg);font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer">
+        Send Code
+      </button>
+    </div>
+
+    <!-- STEP 2: OTP Code -->
+    <div id="login-step-otp" style="display:none">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:1px;color:var(--text-muted);margin-bottom:20px;line-height:1.6">
+        A 6-digit code was sent to<br><span id="otp-email-shown" style="color:var(--accent)"></span>
+      </div>
+      <div style="margin-bottom:24px">
+        <label style="font-family:'IBM Plex Mono',monospace;font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:6px">Enter Code</label>
+        <input id="login-otp" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6"
+          placeholder="000000"
+          style="width:100%;height:56px;padding:0 14px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:1.6rem;letter-spacing:8px;text-align:center"
+          oninput="if(this.value.length===6)verifyOTP()"
+          onkeydown="if(event.key==='Enter')verifyOTP()">
+      </div>
+      <button id="otp-verify-btn" onclick="verifyOTP()"
+        style="width:100%;height:46px;background:var(--accent);border:none;color:var(--bg);font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;margin-bottom:12px">
+        Verify & Enter
+      </button>
+      <button onclick="document.getElementById('login-step-otp').style.display='none';document.getElementById('login-step-email').style.display='block';document.getElementById('login-error').style.display='none'"
+        style="width:100%;height:38px;background:none;border:1px solid var(--border);color:var(--text-dim);font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:2px;cursor:pointer;text-transform:uppercase">
+        ← Use Different Email
+      </button>
+    </div>
+
+    <div style="margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:0.55rem;letter-spacing:1px;color:var(--text-dim);text-align:center">
+      Editor access only. Others can view without logging in.
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP (hidden until logged in) -->
+<div id="main-app" style="display:none">
+
+<canvas id="starfield"></canvas>
 <div class="offline-banner" id="offline-banner">⚠ No internet connection — changes won't save until you're back online</div>
 <div id="loading-bar" style="position:fixed;top:0;left:0;width:100%;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease;z-index:9999"></div>
 
@@ -867,6 +1081,7 @@
     <div class="brand-eyebrow">✦ Personal Collection</div>
     <div class="brand-name">Mike</div>
     <div class="brand-sub">From Skies to Streets.</div>
+    <button class="editor-only" onclick="signOut()" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--text-dim);font-family:'IBM Plex Mono',monospace;font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">Sign Out</button>
   </div>
   <div class="header-stats">
     <div class="hstat"><div class="hstat-num" id="s-trips">0</div><div class="hstat-label">Trips</div></div>
@@ -886,7 +1101,6 @@
       <div class="section-tile-title">Trips</div>
       <div class="section-tile-count" id="tile-trip-count">0 destinations</div>
     </div>
-    <div class="section-tile-arrow">→</div>
   </button>
   <button class="section-tile" id="tab-moments" onclick="switchTab('moments')">
     <div class="section-tile-inner">
@@ -904,16 +1118,28 @@
     <span class="search-icon">⌕</span>
     <input type="text" id="search-input" placeholder="Search everything — names, dates, routes, places…" oninput="globalSearch()">
   </div>
-  <button class="btn-new" id="btn-add-trip" onclick="openNewTripModal()"><span>+</span> New Trip</button>
-  <button class="btn-new" id="btn-add-moment" style="display:none;background:var(--accent2);color:#0a0a0f" onclick="openNewMomentModal()"><span>+</span> New Moment</button>
+  <button class="btn-ghost editor-only" id="btn-quick-add" onclick="toggleQuickAdd()" style="font-size:0.72rem;padding:10px 16px;display:flex;align-items:center;gap:6px">⚡ Quick Add</button>
+  <button class="btn-new editor-only" id="btn-add-trip" onclick="openNewTripModal()"><span>+</span> New Trip</button>
+  <button class="btn-new editor-only" id="btn-add-moment" style="display:none;background:var(--accent2);color:#0a0a0f" onclick="openNewMomentModal()"><span>+</span> New Moment</button>
+</div>
+
+<!-- QUICK ADD BAR -->
+<div class="quick-add-bar editor-only" id="quick-add-bar">
+  <div style="flex:1">
+    <input class="quick-add-input" id="quick-add-input" 
+      placeholder="e.g. PHL to MIA · March 5  or  Miami, FL · 3/5"
+      onkeydown="if(event.key==='Enter')parseQuickAdd()">
+    <div class="quick-add-hint">Type route + date → hit Add or press Enter</div>
+  </div>
+  <button class="quick-add-btn" onclick="parseQuickAdd()">Add Trip</button>
 </div>
 
 <!-- FILTER BAR -->
-<div class="filter-bar" id="filter-bar-trips">
+<div class="filter-bar editor-only" id="filter-bar-trips">
   <button class="filter-chip active" id="chip-all" onclick="setFilter('all')">All</button>
   <button class="filter-chip fav" id="chip-fav" onclick="setFilter('fav')">⭐ Favorites</button>
 </div>
-<div class="filter-bar" id="filter-bar-moments" style="display:none">
+<div class="filter-bar editor-only" id="filter-bar-moments" style="display:none">
   <button class="filter-chip active" id="chip-all-m" onclick="setFilterM('all')">All</button>
   <button class="filter-chip fav" id="chip-fav-m" onclick="setFilterM('fav')">⭐ Favorites</button>
 </div>
@@ -954,11 +1180,19 @@
     <div class="field-row">
       <div class="field">
         <label>Flew From</label>
-        <input type="text" id="f-from" placeholder="e.g. PHL · Philadelphia">
+        <div class="autocomplete-wrap">
+          <input type="text" id="f-from" placeholder="e.g. PHL or Philadelphia" autocomplete="off"
+            oninput="acSearch(this.value,'ac-from')" onkeydown="acKey(event,'ac-from','f-from')">
+          <div class="autocomplete-list" id="ac-from" style="display:none"></div>
+        </div>
       </div>
       <div class="field">
         <label>Flew To</label>
-        <input type="text" id="f-to" placeholder="e.g. KIX · Osaka">
+        <div class="autocomplete-wrap">
+          <input type="text" id="f-to" placeholder="e.g. MIA or Miami" autocomplete="off"
+            oninput="acSearch(this.value,'ac-to')" onkeydown="acKey(event,'ac-to','f-to')">
+          <div class="autocomplete-list" id="ac-to" style="display:none"></div>
+        </div>
       </div>
     </div>
     <div class="field">
@@ -1042,18 +1276,19 @@
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           Share
         </button>
-        <button class="btn-ghost" onclick="openEditModal()" style="font-size:0.78rem;padding:10px 16px">Edit</button>
-        <button class="btn-del" id="delete-trip-btn" data-confirming="false" onclick="deleteTrip()" style="font-size:0.78rem;padding:10px 16px">Delete Trip</button>
+        <button class="btn-dup editor-only" onclick="duplicateTrip()" title="Duplicate trip">⧉ Duplicate</button>
+        <button class="btn-ghost editor-only" onclick="openEditModal()" style="font-size:0.78rem;padding:10px 16px">Edit</button>
+        <button class="btn-del editor-only" id="delete-trip-btn" data-confirming="false" onclick="deleteTrip()" style="font-size:0.78rem;padding:10px 16px">Delete Trip</button>
       </div>
     </div>
     <div class="detail-meta" id="d-meta"></div>
     <div class="notes-section">
       <div class="section-label">✦ Notes &amp; Memories</div>
       <div id="d-notes"></div>
-      <div class="note-compose">
+      <div class="note-compose editor-only">
         <textarea id="note-input" placeholder="Write a memory from this trip…"></textarea>
         <div class="note-compose-footer">
-          <button class="btn-post-note" onclick="addNote()">Post Note</button>
+          <button class="btn-post-note editor-only" onclick="addNote()">Post Note</button>
         </div>
       </div>
     </div>
@@ -1077,11 +1312,21 @@
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           Share
         </button>
-        <button class="btn-ghost" onclick="openEditMomentModal()" style="font-size:0.78rem;padding:10px 16px">Edit</button>
-        <button class="btn-del" id="delete-moment-btn" data-confirming="false" onclick="deleteMoment()" style="font-size:0.78rem;padding:10px 16px">Delete</button>
+        <button class="btn-ghost editor-only" onclick="openEditMomentModal()" style="font-size:0.78rem;padding:10px 16px">Edit</button>
+        <button class="btn-del editor-only" id="delete-moment-btn" data-confirming="false" onclick="deleteMoment()" style="font-size:0.78rem;padding:10px 16px">Delete</button>
       </div>
     </div>
     <div class="detail-meta" id="md-meta"></div>
+    <div class="notes-section">
+      <div class="section-label">✦ Notes &amp; Memories</div>
+      <div id="md-notes"></div>
+      <div class="note-compose editor-only" id="md-note-compose">
+        <textarea id="md-note-input" placeholder="Write a note about this moment…"></textarea>
+        <div class="note-compose-footer">
+          <button class="btn-post-note editor-only" onclick="addMomentNote()">Post Note</button>
+        </div>
+      </div>
+    </div>
     <div class="photos-section">
       <div class="section-label">Photos &amp; Videos</div>
       <div class="photos-grid" id="md-photos"></div>
@@ -1102,7 +1347,144 @@
 <script>
 const SUPA_URL = 'https://mzrnblmffyyspkpmlefv.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16cm5ibG1mZnl5c3BrcG1sZWZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNjIxMDksImV4cCI6MjA4NzczODEwOX0.lDpNwBP42jcWq-PRzPevhdIyw2oANj_pKh4QHp12GiE';
+
+// ── AUTH ──
+const ALLOWED_EDITORS = ['mays.d87@gmail.com', 'mspotwood1@gmail.com']; // ← replace with real emails
+let currentUser = null;
+let isEditor = false;
+let authToken = null;
+
 const H = { 'Content-Type':'application/json', 'apikey':SUPA_KEY, 'Authorization':`Bearer ${SUPA_KEY}`, 'Prefer':'return=representation' };
+
+// Check if ?edit in URL — if so show login, else go straight to public view
+function checkEditMode() {
+  const isEditMode = window.location.search.includes('edit') || window.location.hash.includes('edit');
+  if (isEditMode) {
+    // Check for existing session first
+    const token = sessionStorage.getItem('auth_token');
+    const email = sessionStorage.getItem('user_email');
+    if (token && email) {
+      restoreSession(token, email);
+    } else {
+      showLoginScreen();
+    }
+  } else {
+    // Public view — load app without editor controls
+    loadPublicApp();
+  }
+}
+
+function showLoginScreen() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('main-app').style.display = 'none';
+}
+
+async function sendOTP() {
+  const email = document.getElementById('login-email').value.trim();
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  if (!email) { errEl.textContent = 'Please enter your email.'; errEl.style.display='block'; return; }
+  if (!ALLOWED_EDITORS.map(e=>e.toLowerCase()).includes(email.toLowerCase())) {
+    errEl.textContent = 'This email is not authorized.'; errEl.style.display='block'; return;
+  }
+  const btn = document.getElementById('otp-send-btn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  try {
+    const r = await fetch(`${SUPA_URL}/auth/v1/otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
+      body: JSON.stringify({ email, create_user: true })
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.msg || data.error_description || 'Failed to send code');
+    // Show OTP step
+    document.getElementById('otp-email-shown').textContent = email;
+    document.getElementById('login-step-email').style.display = 'none';
+    document.getElementById('login-step-otp').style.display = 'block';
+    document.getElementById('login-otp').focus();
+  } catch(e) {
+    errEl.textContent = e.message; errEl.style.display='block';
+  } finally {
+    btn.textContent = 'Send Code'; btn.disabled = false;
+  }
+}
+
+async function verifyOTP() {
+  const email = document.getElementById('login-email').value.trim();
+  const token = document.getElementById('login-otp').value.trim();
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('otp-verify-btn');
+  errEl.style.display = 'none';
+  if (token.length !== 6) { errEl.textContent = 'Enter the 6-digit code.'; errEl.style.display='block'; return; }
+  btn.textContent = 'Verifying…'; btn.disabled = true;
+  try {
+    const r = await fetch(`${SUPA_URL}/auth/v1/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
+      body: JSON.stringify({ email, token, type: 'email' })
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.msg || data.error_description || 'Invalid or expired code');
+    authToken = data.access_token;
+    currentUser = data.user;
+    isEditor = true;
+    sessionStorage.setItem('auth_token', authToken);
+    sessionStorage.setItem('user_email', email);
+    Object.assign(H, { 'Authorization': `Bearer ${authToken}` });
+    showEditorApp();
+  } catch(e) {
+    errEl.textContent = e.message; errEl.style.display='block';
+    document.getElementById('login-otp').value='';
+  } finally {
+    btn.textContent = 'Verify & Enter'; btn.disabled = false;
+  }
+}
+
+async function restoreSession(token, email) {
+  try {
+    const r = await fetch(`${SUPA_URL}/auth/v1/user`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${token}` }
+    });
+    if (!r.ok) throw new Error('Session expired');
+    authToken = token;
+    currentUser = await r.json();
+    isEditor = ALLOWED_EDITORS.map(e=>e.toLowerCase()).includes(email.toLowerCase());
+    Object.assign(H, { 'Authorization': `Bearer ${authToken}` });
+    showEditorApp();
+  } catch(e) {
+    sessionStorage.clear();
+    showLoginScreen();
+  }
+}
+
+function showEditorApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  init();
+  // Show all editor controls
+  document.querySelectorAll('.editor-only').forEach(el => el.style.removeProperty('display'));
+  const eyebrow = document.querySelector('.brand-eyebrow');
+  if (eyebrow) eyebrow.textContent = '✦ Editor Mode';
+}
+
+function loadPublicApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-app').style.display = 'block';
+  isEditor = false;
+  init();
+  // Hide all editor controls for public viewers
+  document.querySelectorAll('.editor-only').forEach(el => el.style.display = 'none');
+  const eyebrow = document.querySelector('.brand-eyebrow');
+  if (eyebrow) eyebrow.textContent = '✦ Personal Collection';
+}
+
+function signOut() {
+  sessionStorage.clear();
+  currentUser = null; authToken = null; isEditor = false;
+  Object.assign(H, { 'Authorization': `Bearer ${SUPA_KEY}` });
+  // Redirect to public view
+  window.location.href = window.location.pathname;
+}
 
 const db = {
   async get(table) {
@@ -1177,6 +1559,9 @@ function switchTab(tab) {
   document.getElementById('view-search').style.display = 'none';
   document.getElementById('btn-add-trip').style.display = tab==='trips' ? 'flex' : 'none';
   document.getElementById('btn-add-moment').style.display = tab==='moments' ? 'flex' : 'none';
+  document.getElementById('btn-quick-add').style.display = tab==='trips' ? 'flex' : 'none';
+  // Close quick add bar when switching tabs
+  document.getElementById('quick-add-bar').classList.remove('visible');
   document.getElementById('tab-trips').classList.toggle('active', tab==='trips');
   document.getElementById('tab-moments').classList.toggle('active', tab==='moments');
   updateTileCounts();
@@ -1254,7 +1639,7 @@ function tripCardHTML(t, i) {
     : `<div class="card-note-preview" style="color:var(--text-dim)">Tap to open and add notes…</div>`;
   return `<div class="trip-card" style="animation-delay:${i*0.04}s" onclick="openDetail('${t.id}')">
     ${thumbHtml}
-    <button class="btn-pin ${t.pinned?'pinned':''}" onclick="event.stopPropagation();togglePin('${t.id}','trip')" title="${t.pinned?'Unpin':'Pin to favorites'}">⭐</button>
+    ${isEditor ? `<button class="btn-pin ${t.pinned?'pinned':''}" onclick="event.stopPropagation();togglePin('${t.id}','trip')" title="${t.pinned?'Unpin':'Pin to favorites'}">⭐</button>` : ''}
     <div class="card-top"><div class="card-index">#${String(i+1).padStart(2,'0')}</div>${noteBadge}</div>
     <div class="card-dest">${esc(t.dest)}</div>
     ${t.from||t.to ? `<div class="card-route">${t.from?`<strong>${esc(t.from)}</strong>`:''} ${t.from&&t.to?'→':''} ${t.to?`<strong>${esc(t.to)}</strong>`:''}</div>` : ''}
@@ -1283,9 +1668,10 @@ function momentCardHTML(m, i) {
           : `<img class="moment-thumb" src="${thumb.data}" alt="">`}
         ${m.photos.length>1?`<div class="moment-media-count">${m.photos.length} media</div>`:''}
       </div>` : '';
+  const pinBtn = isEditor ? `<button class="btn-pin ${m.pinned?'pinned':''}" onclick="event.stopPropagation();togglePin('${m.id}','moment')" title="${m.pinned?'Unpin':'Pin to favorites'}">⭐</button>` : '';
+  const thumbWithPin = thumbHtml ? thumbHtml.replace('</div>', pinBtn + '</div>') : pinBtn;
   return `<div class="moment-card" style="animation-delay:${i*0.04}s" onclick="openMomentDetail('${m.id}')">
-    ${thumbHtml}
-    <button class="btn-pin ${m.pinned?'pinned':''}" onclick="event.stopPropagation();togglePin('${m.id}','moment')" title="${m.pinned?'Unpin':'Pin to favorites'}">⭐</button>
+    ${thumbWithPin}
     <div class="moment-body">
       <div class="moment-name">${esc(m.name||'Untitled Moment')}</div>
       <div class="moment-meta">
@@ -1385,7 +1771,7 @@ function openNewTripModal() {
   editingId=null; pendingPhotos=[];
   document.getElementById('modal-title-txt').textContent='Add a Trip';
   ['f-dest','f-from','f-to'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-date').value='';
+  document.getElementById('f-date').value=todayStr();
   document.getElementById('f-previews').innerHTML='';
   document.getElementById('modal-footer').innerHTML=`<button class="btn-save" onclick="saveTrip()">Save Trip</button><button class="btn-ghost" onclick="closeModal()">Cancel</button>`;
   document.getElementById('trip-overlay').classList.add('open');
@@ -1460,7 +1846,7 @@ function openNewMomentModal() {
   editingMomentId=null; pendingMomentPhotos=[];
   document.getElementById('moment-modal-title').textContent='Caught in the Air';
   ['m-name','m-location'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('m-date').value='';
+  document.getElementById('m-date').value=todayStr();
   document.getElementById('m-previews').innerHTML='';
   document.getElementById('moment-footer').innerHTML=`<button class="btn-save" style="background:var(--accent2)" onclick="saveMoment()">Save Moment</button><button class="btn-ghost" onclick="closeMomentModal()">Cancel</button>`;
   document.getElementById('moment-overlay').classList.add('open');
@@ -1504,7 +1890,7 @@ async function saveMoment() {
       const m=moments.find(x=>x.id===editingMomentId); Object.assign(m,updates);
       closeMomentModal(); openMomentDetail(editingMomentId); toast('Moment updated!');
     } else {
-      const newM={id:uid(),name,date:document.getElementById('m-date').value,location:document.getElementById('m-location').value.trim(),photos:pendingMomentPhotos.map(p=>({...p})),coverPhotoId:pendingMomentPhotos[0]?.id||null,created_at:new Date().toISOString()};
+      const newM={id:uid(),name,date:document.getElementById('m-date').value,location:document.getElementById('m-location').value.trim(),photos:pendingMomentPhotos.map(p=>({...p})),coverPhotoId:pendingMomentPhotos[0]?.id||null,notes:[],created_at:new Date().toISOString()};
       await db.insert('moments',newM);
       moments.unshift(newM);
       closeMomentModal(); renderMomentsGrid(moments); updateStats(); toast('Moment saved!');
@@ -1562,6 +1948,7 @@ function openMomentDetail(id) {
   ].join('');
   const btn=document.getElementById('delete-moment-btn');
   btn.dataset.confirming='false'; btn.textContent='Delete'; btn.style.cssText='';
+  renderMomentNotes(m);
   renderDetailPhotos(m,'md-photos',m.id,'moment');
   document.getElementById('moment-detail-overlay').classList.add('open');
 }
@@ -1593,7 +1980,7 @@ function renderDetailPhotos(item, gridId, itemId, itemType) {
 
   g.innerHTML = (photos.length > 1 ? `<div class="drag-hint" style="grid-column:1/-1">⟺ Drag to reorder</div>` : '') +
     photoHTML +
-    `<button class="add-photos-tile" onclick="document.getElementById('${addInputId}').click()"><div class="plus">+</div><div class="lbl">Add Media</div></button>`;
+    (isEditor ? `<button class="add-photos-tile" onclick="document.getElementById('${addInputId}').click()"><div class="plus">+</div><div class="lbl">Add Media</div></button>` : '');
 
   // Wire up drag events
   g.querySelectorAll('.photo-cell').forEach(cell => {
@@ -1663,6 +2050,75 @@ function addMediaToItem(e, itemType) {
     });
   });
   e.target.value='';
+}
+
+// ── MOMENT NOTES ──
+function renderMomentNotes(m) {
+  const el = document.getElementById('md-notes');
+  if (!el) return;
+  if (!m.notes?.length) { el.innerHTML=`<div class="notes-empty">No notes yet — add one below ↓</div>`; return; }
+  el.innerHTML = m.notes.map((n,i) => `
+    <div class="note-card" id="mnc-${n.id}">
+      <div class="note-card-body" id="mnb-${n.id}">${esc(n.text)}</div>
+      <div class="note-card-footer">
+        <div class="note-card-date">${fmtTs(n.ts)}</div>
+        <div class="note-card-actions">
+          <button class="note-action-btn" onclick="startEditMomentNote('${n.id}',${i})">Edit</button>
+          <button class="note-action-btn del" id="mndel-${n.id}" onclick="deleteMomentNote('${n.id}',this)">Delete</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+async function addMomentNote() {
+  const ta = document.getElementById('md-note-input');
+  const text = ta.value.trim(); if (!text) return;
+  const m = moments.find(x=>x.id===activeMomentId); if (!m) return;
+  if (!m.notes) m.notes = [];
+  const note = {id:uid(), text, ts:Date.now()};
+  m.notes.push(note); setLoading(true);
+  try {
+    await db.update('moments', activeMomentId, {notes: m.notes});
+    ta.value=''; renderMomentNotes(m); toast('Note added.');
+  } catch(e) { m.notes.pop(); toast('Error saving note.', true); }
+  finally { setLoading(false); }
+}
+
+function deleteMomentNote(nid, btn) {
+  if (btn.dataset.confirming==='true') {
+    const m = moments.find(x=>x.id===activeMomentId); if (!m) return;
+    m.notes = m.notes.filter(n=>n.id!==nid);
+    setLoading(true);
+    db.update('moments', activeMomentId, {notes: m.notes})
+      .then(()=>{renderMomentNotes(m); toast('Note deleted.');})
+      .catch(()=>toast('Error.',true)).finally(()=>setLoading(false));
+  } else {
+    btn.dataset.confirming='true'; btn.textContent='Confirm?'; btn.classList.add('confirm-del');
+    setTimeout(()=>{if(btn.dataset.confirming==='true'){btn.dataset.confirming='false';btn.textContent='Delete';btn.classList.remove('confirm-del');}},3000);
+  }
+}
+
+function startEditMomentNote(nid, idx) {
+  const m = moments.find(x=>x.id===activeMomentId); if (!m) return;
+  const note = m.notes[idx];
+  document.getElementById(`mnb-${nid}`).innerHTML=`
+    <textarea class="note-edit-area" id="mneta-${nid}">${note.text}</textarea>
+    <div class="note-edit-row">
+      <button class="note-edit-save" onclick="saveEditMomentNote('${nid}',${idx})">Save</button>
+      <button class="note-edit-cancel" onclick="renderMomentNotes(moments.find(x=>x.id===activeMomentId))">Cancel</button>
+    </div>`;
+  document.getElementById(`mnc-${nid}`).querySelector('.note-card-footer').style.display='none';
+  document.getElementById(`mneta-${nid}`).focus();
+}
+
+async function saveEditMomentNote(nid, idx) {
+  const val = document.getElementById(`mneta-${nid}`)?.value.trim();
+  if (!val) { toast('Note cannot be empty.',true); return; }
+  const m = moments.find(x=>x.id===activeMomentId); if (!m) return;
+  m.notes[idx].text = val; m.notes[idx].ts = Date.now();
+  setLoading(true);
+  try { await db.update('moments', activeMomentId, {notes: m.notes}); renderMomentNotes(m); toast('Note updated.'); }
+  catch(e) { toast('Error.',true); } finally { setLoading(false); }
 }
 
 // ── NOTES ──
@@ -1794,6 +2250,235 @@ function setFilterM(f) {
   renderMomentsGrid(getFilteredMoments());
 }
 
+
+// ── AIRPORT DATA ──
+const AIRPORTS = [
+  {code:'ATL',city:'Atlanta',name:'Hartsfield-Jackson'},{code:'LAX',city:'Los Angeles',name:'Los Angeles Intl'},
+  {code:'ORD',city:'Chicago',name:"O'Hare Intl"},{code:'DFW',city:'Dallas',name:'Dallas/Fort Worth'},
+  {code:'DEN',city:'Denver',name:'Denver Intl'},{code:'JFK',city:'New York',name:'John F. Kennedy'},
+  {code:'SFO',city:'San Francisco',name:'San Francisco Intl'},{code:'LAS',city:'Las Vegas',name:'Harry Reid Intl'},
+  {code:'SEA',city:'Seattle',name:'Seattle-Tacoma'},{code:'MIA',city:'Miami',name:'Miami Intl'},
+  {code:'MCO',city:'Orlando',name:'Orlando Intl'},{code:'EWR',city:'Newark',name:'Newark Liberty'},
+  {code:'CLT',city:'Charlotte',name:'Charlotte Douglas'},{code:'PHX',city:'Phoenix',name:'Phoenix Sky Harbor'},
+  {code:'IAH',city:'Houston',name:'George Bush Intl'},{code:'BOS',city:'Boston',name:'Logan Intl'},
+  {code:'MSP',city:'Minneapolis',name:'Minneapolis-St. Paul'},{code:'DTW',city:'Detroit',name:'Detroit Metro'},
+  {code:'PHL',city:'Philadelphia',name:'Philadelphia Intl'},{code:'LGA',city:'New York',name:'LaGuardia'},
+  {code:'BWI',city:'Baltimore',name:'Baltimore/Washington'},{code:'DCA',city:'Washington DC',name:'Reagan National'},
+  {code:'IAD',city:'Washington DC',name:'Dulles Intl'},{code:'MDW',city:'Chicago',name:'Midway'},
+  {code:'TPA',city:'Tampa',name:'Tampa Intl'},{code:'PDX',city:'Portland',name:'Portland Intl'},
+  {code:'HNL',city:'Honolulu',name:'Daniel K. Inouye'},{code:'SAN',city:'San Diego',name:'San Diego Intl'},
+  {code:'STL',city:'St. Louis',name:'St. Louis Lambert'},{code:'BNA',city:'Nashville',name:'Nashville Intl'},
+  {code:'AUS',city:'Austin',name:'Austin-Bergstrom'},{code:'MCI',city:'Kansas City',name:'Kansas City Intl'},
+  {code:'RDU',city:'Raleigh',name:'Raleigh-Durham'},{code:'SJC',city:'San Jose',name:'San Jose Mineta'},
+  {code:'SMF',city:'Sacramento',name:'Sacramento Intl'},{code:'SAT',city:'San Antonio',name:'San Antonio Intl'},
+  {code:'DAL',city:'Dallas',name:'Love Field'},{code:'HOU',city:'Houston',name:'William P. Hobby'},
+  {code:'OAK',city:'Oakland',name:'Oakland Intl'},{code:'PIT',city:'Pittsburgh',name:'Pittsburgh Intl'},
+  {code:'CLE',city:'Cleveland',name:'Cleveland Hopkins'},{code:'CMH',city:'Columbus',name:'John Glenn Intl'},
+  {code:'IND',city:'Indianapolis',name:'Indianapolis Intl'},{code:'MKE',city:'Milwaukee',name:'Mitchell Intl'},
+  {code:'MSY',city:'New Orleans',name:'Louis Armstrong'},{code:'JAX',city:'Jacksonville',name:'Jacksonville Intl'},
+  {code:'RSW',city:'Fort Myers',name:'Southwest Florida'},{code:'PBI',city:'West Palm Beach',name:'Palm Beach Intl'},
+  {code:'FLL',city:'Fort Lauderdale',name:'Fort Lauderdale-Hollywood'},{code:'SRQ',city:'Sarasota',name:'Sarasota-Bradenton'},
+  {code:'BUF',city:'Buffalo',name:'Buffalo Niagara'},{code:'ALB',city:'Albany',name:'Albany Intl'},
+  {code:'BDL',city:'Hartford',name:'Bradley Intl'},{code:'MHT',city:'Manchester',name:'Manchester-Boston'},
+  {code:'PVD',city:'Providence',name:'Rhode Island TF Green'},{code:'ORF',city:'Norfolk',name:'Norfolk Intl'},
+  {code:'RIC',city:'Richmond',name:'Richmond Intl'},{code:'GSO',city:'Greensboro',name:'Piedmont Triad'},
+  {code:'CHS',city:'Charleston',name:'Charleston Intl'},{code:'SAV',city:'Savannah',name:'Savannah/Hilton Head'},
+  {code:'BHM',city:'Birmingham',name:'Birmingham-Shuttlesworth'},{code:'MEM',city:'Memphis',name:'Memphis Intl'},
+  {code:'LIT',city:'Little Rock',name:'Bill and Hillary Clinton'},{code:'OKC',city:'Oklahoma City',name:'Will Rogers World'},
+  {code:'TUL',city:'Tulsa',name:'Tulsa Intl'},{code:'ABQ',city:'Albuquerque',name:'Albuquerque Sunport'},
+  {code:'ELP',city:'El Paso',name:'El Paso Intl'},{code:'TUS',city:'Tucson',name:'Tucson Intl'},
+  {code:'BOI',city:'Boise',name:'Boise Airport'},{code:'GEG',city:'Spokane',name:'Spokane Intl'},
+  {code:'BZN',city:'Bozeman',name:'Bozeman Yellowstone'},{code:'SLC',city:'Salt Lake City',name:'Salt Lake City Intl'},
+  {code:'RNO',city:'Reno',name:'Reno-Tahoe Intl'},{code:'LGB',city:'Long Beach',name:'Long Beach Airport'},
+  {code:'BUR',city:'Burbank',name:'Hollywood Burbank'},{code:'SNA',city:'Orange County',name:'John Wayne'},
+  {code:'SJU',city:'San Juan',name:'Luis Muñoz Marín'},{code:'ANC',city:'Anchorage',name:'Ted Stevens'},
+  {code:'FAI',city:'Fairbanks',name:'Fairbanks Intl'},{code:'OGG',city:'Maui',name:'Kahului'},
+  {code:'KOA',city:'Kona',name:'Ellison Onizuka Kona'},{code:'LIH',city:'Kauai',name:'Lihue'},
+  {code:'ITO',city:'Hilo',name:'Hilo Intl'},
+  // International
+  {code:'LHR',city:'London',name:'Heathrow'},{code:'CDG',city:'Paris',name:'Charles de Gaulle'},
+  {code:'NRT',city:'Tokyo',name:'Narita'},{code:'HND',city:'Tokyo',name:'Haneda'},
+  {code:'DXB',city:'Dubai',name:'Dubai Intl'},{code:'SYD',city:'Sydney',name:'Kingsford Smith'},
+  {code:'YYZ',city:'Toronto',name:'Pearson Intl'},{code:'YVR',city:'Vancouver',name:'Vancouver Intl'},
+  {code:'CUN',city:'Cancun',name:'Cancun Intl'},{code:'MEX',city:'Mexico City',name:'Benito Juárez'},
+  {code:'GRU',city:'São Paulo',name:'Guarulhos'},{code:'EZE',city:'Buenos Aires',name:'Ezeiza'},
+  {code:'FCO',city:'Rome',name:'Fiumicino'},{code:'BCN',city:'Barcelona',name:'El Prat'},
+  {code:'AMS',city:'Amsterdam',name:'Schiphol'},{code:'FRA',city:'Frankfurt',name:'Frankfurt Airport'},
+  {code:'ICN',city:'Seoul',name:'Incheon'},{code:'PEK',city:'Beijing',name:"Capital Int'l"},
+  {code:'PVG',city:'Shanghai',name:'Pudong'},{code:'SIN',city:'Singapore',name:'Changi'},
+  {code:'BKK',city:'Bangkok',name:'Suvarnabhumi'},{code:'KIX',city:'Osaka',name:'Kansai'},
+];
+
+let acHighlight = {from: -1, to: -1};
+
+function acSearch(val, listId) {
+  const list = document.getElementById(listId);
+  if (!val || val.length < 2) { list.style.display='none'; return; }
+  const q = val.toUpperCase().trim();
+  const ql = val.toLowerCase().trim();
+  const matches = AIRPORTS.filter(a =>
+    a.code.startsWith(q) ||
+    a.city.toLowerCase().startsWith(ql) ||
+    a.name.toLowerCase().includes(ql) ||
+    a.city.toLowerCase().includes(ql)
+  ).slice(0, 8);
+
+  if (!matches.length) { list.style.display='none'; return; }
+  const key = listId === 'ac-from' ? 'from' : 'to';
+  acHighlight[key] = -1;
+  list.innerHTML = matches.map((a,i) =>
+    `<div class="autocomplete-item" data-idx="${i}" 
+      onmousedown="acSelect('${a.code}','${a.city}','${listId}')"
+      onmouseover="acHighlight['${key}']=${i};acRender('${listId}')">
+      <span class="ac-code">${a.code}</span>
+      <span class="ac-name">${a.name}</span>
+      <span class="ac-city">${a.city}</span>
+    </div>`
+  ).join('');
+  list.style.display='block';
+  list._matches = matches;
+}
+
+function acRender(listId) {
+  const key = listId === 'ac-from' ? 'from' : 'to';
+  const items = document.querySelectorAll(`#${listId} .autocomplete-item`);
+  items.forEach((el,i) => el.classList.toggle('highlighted', i===acHighlight[key]));
+}
+
+function acKey(e, listId, inputId) {
+  const list = document.getElementById(listId);
+  if (list.style.display==='none') return;
+  const key = listId === 'ac-from' ? 'from' : 'to';
+  const count = list._matches?.length || 0;
+  if (e.key==='ArrowDown') { e.preventDefault(); acHighlight[key]=Math.min(acHighlight[key]+1,count-1); acRender(listId); }
+  else if (e.key==='ArrowUp') { e.preventDefault(); acHighlight[key]=Math.max(acHighlight[key]-1,0); acRender(listId); }
+  else if (e.key==='Enter' && acHighlight[key]>=0) {
+    e.preventDefault();
+    const a = list._matches[acHighlight[key]];
+    acSelect(a.code, a.city, listId);
+  } else if (e.key==='Escape') { list.style.display='none'; }
+}
+
+function acSelect(code, city, listId) {
+  const inputId = listId==='ac-from' ? 'f-from' : 'f-to';
+  document.getElementById(inputId).value = `${code} · ${city}`;
+  document.getElementById(listId).style.display='none';
+  // Also auto-fill destination if empty
+  if (listId==='ac-to' && !document.getElementById('f-dest').value) {
+    document.getElementById('f-dest').value = city;
+  }
+}
+
+// Close autocomplete on outside click
+document.addEventListener('click', e => {
+  ['ac-from','ac-to'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.closest('.autocomplete-wrap')?.contains(e.target)) {
+      el.style.display='none';
+    }
+  });
+});
+
+// ── TODAY AS DEFAULT DATE ──
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+// ── QUICK ADD ──
+function toggleQuickAdd() {
+  const bar = document.getElementById('quick-add-bar');
+  const btn = document.getElementById('btn-quick-add');
+  const visible = bar.classList.toggle('visible');
+  btn.style.borderColor = visible ? 'var(--accent)' : '';
+  btn.style.color = visible ? 'var(--accent)' : '';
+  if (visible) document.getElementById('quick-add-input').focus();
+}
+
+function parseQuickAdd() {
+  const raw = document.getElementById('quick-add-input').value.trim();
+  if (!raw) return;
+
+  // Try to parse patterns like:
+  // "PHL to MIA March 5"
+  // "PHL MIA 3/5"
+  // "Miami FL March 5"
+  // "Miami · March 5, 2025"
+  let from='', to='', dest='', date='';
+
+  // Extract route: "XXX to YYY" or "XXX YYY"
+  const routeMatch = raw.match(/([A-Z]{3})\s+(?:to\s+)?([A-Z]{3})/i);
+  if (routeMatch) {
+    const fromAc = AIRPORTS.find(a=>a.code===routeMatch[1].toUpperCase());
+    const toAc = AIRPORTS.find(a=>a.code===routeMatch[2].toUpperCase());
+    from = fromAc ? `${fromAc.code} · ${fromAc.city}` : routeMatch[1].toUpperCase();
+    to = toAc ? `${toAc.code} · ${toAc.city}` : routeMatch[2].toUpperCase();
+    dest = toAc ? toAc.city : routeMatch[2];
+  }
+
+  // Extract date patterns: "March 5", "3/5", "3/5/25", "Mar 5 2025"
+  const months = {jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12,
+    january:1,february:2,march:3,april:4,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
+  const monthNames = Object.keys(months).filter(k=>k.length>3);
+  const monthPattern = monthNames.concat(Object.keys(months).filter(k=>k.length===3)).join('|');
+  const namedDate = raw.match(new RegExp(`(${monthPattern})\s+(\d{1,2})(?:[,\s]+(\d{2,4}))?`,'i'));
+  if (namedDate) {
+    const m = months[namedDate[1].toLowerCase()];
+    const d = parseInt(namedDate[2]);
+    const y = namedDate[3] ? (namedDate[3].length===2?2000+parseInt(namedDate[3]):parseInt(namedDate[3])) : new Date().getFullYear();
+    date = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  } else {
+    const numDate = raw.match(/(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?/);
+    if (numDate) {
+      const m=parseInt(numDate[1]), d=parseInt(numDate[2]);
+      const y=numDate[3]?(numDate[3].length===2?2000+parseInt(numDate[3]):parseInt(numDate[3])):new Date().getFullYear();
+      date=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    }
+  }
+
+  // If no route match, try city name as destination
+  if (!dest) {
+    const cleaned = raw.replace(/\d+\/\d+[\d\/]*/g,'').replace(new RegExp(monthPattern+'\s+\d+','gi'),'').trim();
+    dest = cleaned.replace(/to/gi,'').replace(/·/g,'').trim().split(/\s{2,}/)[0];
+  }
+
+  if (!dest && !from) { toast('Could not parse — try "PHL to MIA March 5"', true); return; }
+
+  // Open trip modal pre-filled
+  openNewTripModal();
+  if (dest) document.getElementById('f-dest').value = dest;
+  if (date) document.getElementById('f-date').value = date;
+  if (from) document.getElementById('f-from').value = from;
+  if (to) document.getElementById('f-to').value = to;
+
+  document.getElementById('quick-add-input').value='';
+  toggleQuickAdd();
+  toast('✓ Parsed! Review and save.');
+}
+
+// ── DUPLICATE TRIP ──
+async function duplicateTrip() {
+  const t = trips.find(x=>x.id===activeId); if(!t) return;
+  setLoading(true);
+  try {
+    const copy = {
+      ...t,
+      id: uid(),
+      dest: t.dest + ' (copy)',
+      date: todayStr(),
+      notes: [],
+      pinned: false,
+      created_at: new Date().toISOString()
+    };
+    await db.insert('trips', copy);
+    trips.unshift(copy);
+    closeDetail();
+    renderTripsGrid(trips);
+    updateStats();
+    toast('Trip duplicated! Update the date and details.');
+  } catch(e) { toast('Error duplicating.', true); }
+  finally { setLoading(false); }
+}
+
 // ── OFFLINE DETECTION ──
 function updateOnlineStatus() {
   const banner = document.getElementById('offline-banner');
@@ -1899,7 +2584,82 @@ async function init() {
 }
 
 updateOnlineStatus();
-init();
+checkEditMode(); // Public view or editor mode based on ?edit in URL
+
+// ── STARFIELD ──
+(function() {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 4000);
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.2 + 0.1,
+        opacity: Math.random() * 0.6 + 0.1,
+        speed: Math.random() * 0.15 + 0.02,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        // occasional accent colored stars
+        color: Math.random() > 0.97 ? '#00c2ff' : Math.random() > 0.96 ? '#ff6b35' : '#ffffff'
+      });
+    }
+  }
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    frame += 0.5;
+    stars.forEach(s => {
+      // Drift slowly downward like looking out a plane window
+      s.y += s.speed;
+      if (s.y > H + 2) { s.y = -2; s.x = Math.random() * W; }
+
+      // Twinkle
+      const twinkle = Math.sin(frame * s.twinkleSpeed + s.twinkleOffset);
+      const opacity = s.opacity + twinkle * 0.15;
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.color === '#ffffff'
+        ? `rgba(255,255,255,${Math.max(0, opacity)})`
+        : s.color === '#00c2ff'
+          ? `rgba(0,194,255,${Math.max(0, opacity * 0.8)})`
+          : `rgba(255,107,53,${Math.max(0, opacity * 0.7)})`;
+      ctx.fill();
+
+      // Occasional subtle glow on brighter stars
+      if (s.r > 0.9 && opacity > 0.4) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
+        ctx.fillStyle = s.color === '#ffffff'
+          ? `rgba(255,255,255,0.03)`
+          : s.color === '#00c2ff'
+            ? `rgba(0,194,255,0.04)`
+            : `rgba(255,107,53,0.03)`;
+        ctx.fill();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  createStars();
+  draw();
+  window.addEventListener('resize', () => { resize(); createStars(); });
+})();
+
 </script>
+</div><!-- end main-app -->
 </body>
 </html>
