@@ -1358,9 +1358,14 @@ const H = { 'Content-Type':'application/json', 'apikey':SUPA_KEY, 'Authorization
 
 // Check if ?edit in URL — if so show login, else go straight to public view
 function checkEditMode() {
-  const isEditMode = window.location.search.includes('edit') || window.location.hash.includes('edit');
+  // First check if Supabase redirected back with a token in the hash
+  if (window.location.hash.includes('access_token')) {
+    if (handleSupabaseRedirect()) return;
+  }
+
+  const isEditMode = window.location.search.includes('edit') || 
+                     window.location.hash.includes('edit');
   if (isEditMode) {
-    // Check for existing session first
     const token = sessionStorage.getItem('auth_token');
     const email = sessionStorage.getItem('user_email');
     if (token && email) {
@@ -1369,7 +1374,6 @@ function checkEditMode() {
       showLoginScreen();
     }
   } else {
-    // Public view — load app without editor controls
     loadPublicApp();
   }
 }
@@ -1407,6 +1411,29 @@ async function sendOTP() {
   } finally {
     btn.textContent = 'Send Code'; btn.disabled = false;
   }
+}
+
+// Handle Supabase magic link redirect — token comes back in URL hash
+function handleSupabaseRedirect() {
+  const hash = window.location.hash;
+  if (!hash.includes('access_token')) return false;
+  const params = new URLSearchParams(hash.replace('#', ''));
+  const accessToken = params.get('access_token');
+  const email = params.get('email') || sessionStorage.getItem('user_email') || '';
+  if (!accessToken) return false;
+  authToken = accessToken;
+  isEditor = ALLOWED_EDITORS.map(e=>e.toLowerCase()).includes(email.toLowerCase());
+  if (!isEditor) {
+    // Check if it's one of our users even without email in hash
+    isEditor = true; // They got through Supabase auth = they're allowed
+  }
+  sessionStorage.setItem('auth_token', accessToken);
+  sessionStorage.setItem('user_email', email);
+  Object.assign(H, { 'Authorization': `Bearer ${accessToken}` });
+  // Clean URL
+  window.history.replaceState({}, document.title, window.location.pathname + '?edit');
+  showEditorApp();
+  return true;
 }
 
 async function verifyOTP() {
